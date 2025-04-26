@@ -99,6 +99,15 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AddCell"",
+                    ""type"": ""Value"",
+                    ""id"": ""f1c5cfe8-b79c-4d96-b072-f93eea3aa91b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,39 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""NextStep"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""dfb9e9c4-f121-4974-9b87-b8794920ce1a"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddCell"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""981ecd20-5428-4e58-b911-45e4e1ed7ff8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddCell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""dc13a80b-ab9b-4060-86d3-fe4d6a06f80f"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddCell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -121,6 +163,7 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
         m_Game_NextStep = m_Game.FindAction("NextStep", throwIfNotFound: true);
+        m_Game_AddCell = m_Game.FindAction("AddCell", throwIfNotFound: true);
     }
 
     ~@CustomInputAction()
@@ -202,6 +245,7 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Game;
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
     private readonly InputAction m_Game_NextStep;
+    private readonly InputAction m_Game_AddCell;
     /// <summary>
     /// Provides access to input actions defined in input action map "Game".
     /// </summary>
@@ -217,6 +261,10 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Game/NextStep".
         /// </summary>
         public InputAction @NextStep => m_Wrapper.m_Game_NextStep;
+        /// <summary>
+        /// Provides access to the underlying input action "Game/AddCell".
+        /// </summary>
+        public InputAction @AddCell => m_Wrapper.m_Game_AddCell;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -246,6 +294,9 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
             @NextStep.started += instance.OnNextStep;
             @NextStep.performed += instance.OnNextStep;
             @NextStep.canceled += instance.OnNextStep;
+            @AddCell.started += instance.OnAddCell;
+            @AddCell.performed += instance.OnAddCell;
+            @AddCell.canceled += instance.OnAddCell;
         }
 
         /// <summary>
@@ -260,6 +311,9 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
             @NextStep.started -= instance.OnNextStep;
             @NextStep.performed -= instance.OnNextStep;
             @NextStep.canceled -= instance.OnNextStep;
+            @AddCell.started -= instance.OnAddCell;
+            @AddCell.performed -= instance.OnAddCell;
+            @AddCell.canceled -= instance.OnAddCell;
         }
 
         /// <summary>
@@ -307,5 +361,12 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNextStep(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AddCell" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAddCell(InputAction.CallbackContext context);
     }
 }

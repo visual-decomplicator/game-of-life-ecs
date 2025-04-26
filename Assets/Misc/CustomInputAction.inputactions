@@ -1,0 +1,34 @@
+{
+    "name": "CustomInputAction",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "fa1bb92f-47a7-4087-9b1a-6ca3ae40388d",
+            "actions": [
+                {
+                    "name": "NextStep",
+                    "type": "Button",
+                    "id": "3ccac691-c0b2-4176-93fb-43637c880eb2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d16ec602-727c-405f-b731-cc7eec391b83",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextStep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

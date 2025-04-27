@@ -12,7 +12,7 @@ namespace Systems {
 
         public EventHandler<ClickData> OnClick;
         public class ClickData : EventArgs {
-            public int2 Position;
+            public float2 Position;
         }
         
         protected override void OnCreate() {
@@ -27,7 +27,7 @@ namespace Systems {
             var clickPosition = obj.ReadValue<Vector2>();
             Ray clickRay = _camera.ScreenPointToRay(clickPosition);
             OnClick?.Invoke(this, new ClickData() {
-                Position = new int2((int)clickRay.origin.x, (int)clickRay.origin.z)
+                Position = new float2(clickRay.origin.x, clickRay.origin.z)
             });
         }
 

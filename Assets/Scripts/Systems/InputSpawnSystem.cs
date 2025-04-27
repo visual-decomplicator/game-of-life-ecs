@@ -11,6 +11,12 @@ namespace Systems {
         }
 
         private void OnClick(object sender, CustomInputSystem.ClickData e) {
+            var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
+            int2 cellCoordinates = new int2(
+                (int)math.round(e.Position.x / (1f + commonSettings.GridGap)),
+                (int)math.round(e.Position.y / (1f + commonSettings.GridGap))
+            );
+            
             var ecb = this.World.GetExistingSystemManaged<BeginSimulationEntityCommandBufferSystem>()
                 .CreateCommandBuffer();
             bool entityFound = false;
@@ -18,7 +24,7 @@ namespace Systems {
                          .Query<GridPositionComponent>()
                          .WithAll<IsAliveComponent>()
                      ) {
-                if (gridPosition.Position.Equals(e.Position)) {
+                if (gridPosition.Position.Equals(cellCoordinates)) {
                     entityFound = true;
                     break;
                 }
@@ -32,7 +38,7 @@ namespace Systems {
                          .WithNone<IsAliveComponent>()
                          .WithEntityAccess()
                     ) {
-                if (!gridPosition.Position.Equals(e.Position)) {
+                if (!gridPosition.Position.Equals(cellCoordinates)) {
                     continue;
                 }
                 
@@ -46,11 +52,10 @@ namespace Systems {
                 break;
             }
 
-            var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
             if (!entityFound) {
-                GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, e.Position, 1);
+                GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, cellCoordinates, 1);
                 Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
-                ecb.SetComponent(spawned, new GridPositionComponent { Position = e.Position });
+                ecb.SetComponent(spawned, new GridPositionComponent { Position = cellCoordinates });
                 ecb.AddComponent<IsAliveComponent>(spawned);
             }
             

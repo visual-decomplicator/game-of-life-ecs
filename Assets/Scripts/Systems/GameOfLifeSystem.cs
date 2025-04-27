@@ -46,10 +46,13 @@ namespace Systems {
             }
             
             var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
+            Entity commonSettingsEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
             var cellCounterMap = new NativeHashMap<int2, int>(CellCounterMapInitCapacity, Allocator.Temp);
             var cellsToDeleteMap = new NativeHashSet<int2>(100, Allocator.Temp);
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
+            
+            SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonSettingsEntity, true);
             
             foreach (var (counter, visualEntity, gridPosition, entity) in SystemAPI
                          .Query<CounterComponent, VisualEntityComponent, GridPositionComponent>()

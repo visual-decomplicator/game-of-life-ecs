@@ -22,6 +22,8 @@ namespace Components {
                     StepDelay = authoring.StepDelay,
                     Timer = -1000 // For the first iteration make it longer, to have time to mark the necessary cells as alive using input.
                 });;
+                
+                AddComponent<NeedFitCameraComponent>(entity);
             }
         }
     }
@@ -37,4 +39,6 @@ namespace Components {
         public float StepDelay;
         public float Timer;
     }
+    
+    public struct NeedFitCameraComponent : IComponentData, IEnableableComponent {}
 }

@@ -1,5 +1,7 @@
 using Components;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace Systems {
     public partial class InputSpawnSystem : SystemBase {
@@ -12,28 +14,60 @@ namespace Systems {
             var ecb = this.World.GetExistingSystemManaged<BeginSimulationEntityCommandBufferSystem>()
                 .CreateCommandBuffer();
             bool entityFound = false;
-            foreach (var (gridPosition, entity) in SystemAPI
+            foreach (var gridPosition in SystemAPI
                          .Query<GridPositionComponent>()
-                         .WithEntityAccess()
+                         .WithAll<IsAliveComponent>()
                      ) {
-                if (!gridPosition.Position.Equals(e.Position)) {
-                    continue;
-                }
-                
-                entityFound = true;
-                if (!SystemAPI.HasComponent<IsAliveComponent>(entity) 
-                    && !SystemAPI.HasComponent<NeedSetIsAliveComponent>(entity)
-                    && !SystemAPI.HasComponent<NeedRemoveIsAliveComponent>(entity)) {
-                    ecb.AddComponent<NeedSetIsAliveComponent>(entity);
+                if (gridPosition.Position.Equals(e.Position)) {
+                    entityFound = true;
+                    break;
                 }
             }
 
             if (entityFound) return;
             
+            var cellCounterMap = new NativeHashMap<int2, int>(8, Allocator.Temp);
+            foreach (var (gridPosition, visualEntity, entity) in SystemAPI
+                         .Query<GridPositionComponent, VisualEntityComponent>()
+                         .WithNone<IsAliveComponent>()
+                         .WithEntityAccess()
+                    ) {
+                if (!gridPosition.Position.Equals(e.Position)) {
+                    continue;
+                }
+                
+                entityFound = true;
+                ecb.AddComponent<IsAliveComponent>(entity);
+                GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, gridPosition.Position, 1);
+                if (visualEntity.Entity != Entity.Null) {
+                    ecb.DestroyEntity(visualEntity.Entity);
+                    ecb.SetComponent(entity, new VisualEntityComponent() {Entity = Entity.Null});
+                }
+                break;
+            }
+
             var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
-            Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
-            ecb.SetComponent(spawned, new GridPositionComponent { Position = e.Position });
-            ecb.AddComponent<NeedSetIsAliveComponent>(spawned);
+            if (!entityFound) {
+                GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, e.Position, 1);
+                Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+                ecb.SetComponent(spawned, new GridPositionComponent { Position = e.Position });
+                ecb.AddComponent<IsAliveComponent>(spawned);
+            }
+            
+            foreach (var (counter, gridPosition) in SystemAPI
+                         .Query<RefRW<CounterComponent>, RefRO<GridPositionComponent>>()
+                     ) {
+                if (cellCounterMap.TryGetValue(gridPosition.ValueRO.Position, out int value)) {
+                    counter.ValueRW.Value += value;
+                    cellCounterMap.Remove(gridPosition.ValueRO.Position);
+                }
+            }
+
+            foreach (var counterDeltaMap in cellCounterMap) {
+                Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+                ecb.SetComponent(spawned, new GridPositionComponent { Position = counterDeltaMap.Key });
+                ecb.SetComponent(spawned, new CounterComponent() { Value = counterDeltaMap.Value });
+            }
         }
 
         protected override void OnUpdate() {

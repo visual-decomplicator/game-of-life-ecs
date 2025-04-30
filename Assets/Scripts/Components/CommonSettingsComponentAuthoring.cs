@@ -19,9 +19,8 @@ namespace Components {
                     AliveVisualPrefab = GetEntity(authoring.AliveVisualPrefab, TransformUsageFlags.Dynamic)
                 });
                 AddComponent(entity, new CommonStepComponent {
-                    StepDelay = authoring.StepDelay,
-                    Timer = -1000 // For the first iteration make it longer, to have time to mark the necessary cells as alive using input.
-                });;
+                    StepDelay = authoring.StepDelay
+                });
                 
                 AddComponent<NeedFitCameraComponent>(entity);
             }

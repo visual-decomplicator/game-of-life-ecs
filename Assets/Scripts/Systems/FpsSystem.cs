@@ -7,7 +7,7 @@ public partial struct FpsSystem : ISystem {
     
     [BurstCompile]
     public void OnUpdate(ref SystemState state) {
-        var fpsBufferLookup = SystemAPI.GetBufferLookup<FPSCounterElement>(false);
+        var fpsBufferLookup = SystemAPI.GetBufferLookup<Components.FPSCounterElement>(false);
         new FPSCalcJob() {
             Dt = SystemAPI.Time.DeltaTime,
             FPSBufferLookup = fpsBufferLookup
@@ -17,12 +17,12 @@ public partial struct FpsSystem : ISystem {
 
 [BurstCompile]
 public partial struct FPSCalcJob : IJobEntity {
-    public BufferLookup<FPSCounterElement> FPSBufferLookup;
+    public BufferLookup<Components.FPSCounterElement> FPSBufferLookup;
     public float Dt;
-    public void Execute(Entity entity, ref FPSCounterComponent fpsCounter) {
+    public void Execute(Entity entity, ref Components.FPSCounterComponent fpsCounter) {
         var fpsBuffer = FPSBufferLookup[entity];
         if (fpsBuffer.Length < fpsCounter.MaxBufferElements) {
-            fpsBuffer.Add(new FPSCounterElement() { Value = Dt });
+            fpsBuffer.Add(new Components.FPSCounterElement() { Value = Dt });
             fpsCounter.CurrentBufferElement++;
             return;
         }
@@ -31,7 +31,7 @@ public partial struct FPSCalcJob : IJobEntity {
             fpsCounter.CurrentBufferElement = 0;
         }
             
-        fpsBuffer[fpsCounter.CurrentBufferElement] = new FPSCounterElement() { Value = Dt };
+        fpsBuffer[fpsCounter.CurrentBufferElement] = new Components.FPSCounterElement() { Value = Dt };
         fpsCounter.CurrentBufferElement++;
             
         // Calculate FPS

@@ -11,11 +11,18 @@ namespace Systems {
             state.RequireForUpdate<CommonSettingsComponent>();
             state.RequireForUpdate<InitialSpawnerComponent>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            state.RequireForUpdate<GameStateComponent>();
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
+            var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+            if (gameState.State != GameState.Prepare) {
+                return;
+            }
+            
             var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
+            var commonSettingsEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
             foreach (var (initSpawner, random, entity) in SystemAPI
@@ -24,6 +31,7 @@ namespace Systems {
                      ) {
                 if (initSpawner.ValueRO.EntitiesCount <= 0) {
                     ecb.RemoveComponent<InitialSpawnerComponent>(entity);
+                    SystemAPI.SetSingleton(new GameStateComponent(){State = GameState.Play});
                     continue;
                 }
                 
@@ -90,6 +98,7 @@ namespace Systems {
                     ecb.SetComponent(spawned, new CounterComponent() { Value = counterDeltaMap.Value });
                 }
                 
+                SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonSettingsEntity, true);
                 spawnedEntitiesMap.Dispose();
                 cellCounterMap.Dispose();
                 cellPositionsToSpawn.Dispose();

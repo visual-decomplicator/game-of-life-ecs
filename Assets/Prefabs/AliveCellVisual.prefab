@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 67762263211093174, guid: 9d46e932774aa4f548a32afd3aa5cfeb, type: 3}
       propertyPath: m_Name
-      value: CellVisual Variant
+      value: AliveCellVisual
       objectReference: {fileID: 0}
     - target: {fileID: 4503291176977967841, guid: 9d46e932774aa4f548a32afd3aa5cfeb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4503291176977967841, guid: 9d46e932774aa4f548a32afd3aa5cfeb, type: 3}
       propertyPath: m_LocalPosition.y

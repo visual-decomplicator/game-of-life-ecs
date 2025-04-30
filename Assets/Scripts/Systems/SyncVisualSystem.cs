@@ -14,7 +14,7 @@ namespace Systems {
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
-            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
+            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
             
             foreach (var (visualEntity, gridPosition, entity) in SystemAPI

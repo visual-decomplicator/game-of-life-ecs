@@ -11,6 +11,11 @@ namespace Systems {
         }
 
         private void OnClick(object sender, CustomInputSystem.ClickData e) {
+            var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+            if (gameState.State != GameState.Play) {
+                return;
+            }
+            
             var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
             int2 cellCoordinates = new int2(
                 (int)math.round(e.Position.x / (1f + commonSettings.GridGap)),

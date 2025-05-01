@@ -5,6 +5,36 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 namespace Systems {
+
+    public partial class InitIputSystem : SystemBase {
+        protected override void OnCreate() {
+            RequireForUpdate<InitialSpawnerComponent>();
+            RequireForUpdate<GameStateComponent>();
+            
+        }
+
+        protected override void OnStartRunning() {
+            InitInputUI.Instance.OnStartButtonClick += OnStartButtonClick;
+        }
+
+        private void OnStartButtonClick(object sender, InitInputUI.InitSettings e) {
+            var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+            if (gameState.State != GameState.InputConfig) {
+                return;
+            }
+            
+            var spawnSettings = SystemAPI.GetSingleton<InitialSpawnerComponent>();
+            spawnSettings.MaxGridSize = e.GridSize;
+            spawnSettings.EntitiesCount = e.EntitiesCount;
+            SystemAPI.SetSingleton(spawnSettings);
+            SystemAPI.SetSingleton(new GameStateComponent(){ State = GameState.Prepare });
+        }
+
+        protected override void OnUpdate() {
+            
+        }
+    }
+    
     public partial struct InitialSpawnSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {

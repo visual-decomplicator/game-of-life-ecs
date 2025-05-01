@@ -20,6 +20,7 @@ namespace Components {
     }
     
     public enum GameState {
+        InputConfig,
         Prepare,
         Play
     }

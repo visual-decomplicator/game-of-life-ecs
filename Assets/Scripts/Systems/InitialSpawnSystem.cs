@@ -75,6 +75,8 @@ namespace Systems {
                     Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
                     ecb.SetComponent(spawned, new GridPositionComponent { Position = position });
                     ecb.AddComponent<IsAliveComponent>(spawned);
+                    ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                    ecb.AddComponent<NeedChangeVisualComponent>(spawned);
                     spawnedEntitiesMap.Add(position, spawned);
                 }
                 
@@ -96,6 +98,8 @@ namespace Systems {
                     Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
                     ecb.SetComponent(spawned, new GridPositionComponent { Position = counterDeltaMap.Key });
                     ecb.SetComponent(spawned, new CounterComponent() { Value = counterDeltaMap.Value });
+                    ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                    ecb.AddComponent<NeedChangeVisualComponent>(spawned);
                 }
                 
                 SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonSettingsEntity, true);

@@ -14,16 +14,16 @@ namespace Systems {
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
-            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
             
             foreach (var (visualEntity, gridPosition, entity) in SystemAPI
                          .Query<VisualEntityComponent, GridPositionComponent>()
-                         .WithAll<IsAliveComponent>()
+                         .WithAll<IsAliveComponent, NeedChangeVisualComponent>()
                          .WithEntityAccess()
                      ) {
                 if (visualEntity.Entity != Entity.Null) {
-                    continue;
+                    ecb.DestroyEntity(visualEntity.Entity);
                 }
 
                 Entity spawned = ecb.Instantiate(commonSettings.AliveVisualPrefab);
@@ -39,15 +39,17 @@ namespace Systems {
                 ecb.SetComponent(entity, new VisualEntityComponent() {
                     Entity = spawned
                 });
+                SystemAPI.SetComponentEnabled<NeedChangeVisualComponent>(entity, false);
             }
             
             foreach (var (visualEntity, gridPosition, entity) in SystemAPI
                          .Query<VisualEntityComponent, GridPositionComponent>()
+                         .WithAll<NeedChangeVisualComponent>()
                          .WithNone<IsAliveComponent>()
                          .WithEntityAccess()
                     ) {
                 if (visualEntity.Entity != Entity.Null) {
-                    continue;
+                    ecb.DestroyEntity(visualEntity.Entity);
                 }
 
                 Entity spawned = ecb.Instantiate(commonSettings.DeadVisualPrefab);
@@ -63,6 +65,7 @@ namespace Systems {
                 ecb.SetComponent(entity, new VisualEntityComponent() {
                     Entity = spawned
                 });
+                SystemAPI.SetComponentEnabled<NeedChangeVisualComponent>(entity, false);
             }
         }
 

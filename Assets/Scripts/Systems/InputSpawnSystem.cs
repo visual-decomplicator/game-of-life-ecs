@@ -57,6 +57,8 @@ namespace Systems {
                 Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
                 ecb.SetComponent(spawned, new GridPositionComponent { Position = cellCoordinates });
                 ecb.AddComponent<IsAliveComponent>(spawned);
+                ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                ecb.AddComponent<NeedChangeVisualComponent>(spawned);
             }
             
             foreach (var (counter, gridPosition) in SystemAPI
@@ -72,6 +74,8 @@ namespace Systems {
                 Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
                 ecb.SetComponent(spawned, new GridPositionComponent { Position = counterDeltaMap.Key });
                 ecb.SetComponent(spawned, new CounterComponent() { Value = counterDeltaMap.Value });
+                ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                ecb.AddComponent<NeedChangeVisualComponent>(spawned);
             }
         }
 

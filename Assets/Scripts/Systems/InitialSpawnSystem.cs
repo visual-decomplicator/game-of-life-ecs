@@ -62,10 +62,7 @@ namespace Systems {
                         continue;
                     }
                     ecb.AddComponent<IsAliveComponent>(deadEntity);
-                    if (visualEntity.Entity != Entity.Null) {
-                        ecb.DestroyEntity(visualEntity.Entity);
-                        ecb.SetComponent(deadEntity, new VisualEntityComponent() {Entity = Entity.Null});
-                    }
+                    ecb.SetComponentEnabled<NeedChangeVisualComponent>(deadEntity, true);
                     GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, gridPosition.Position, 1);
                     cellPositionsToSpawn.Remove(gridPosition.Position);
                 }

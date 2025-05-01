@@ -45,10 +45,7 @@ namespace Systems {
                 entityFound = true;
                 ecb.AddComponent<IsAliveComponent>(entity);
                 GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, gridPosition.Position, 1);
-                if (visualEntity.Entity != Entity.Null) {
-                    ecb.DestroyEntity(visualEntity.Entity);
-                    ecb.SetComponent(entity, new VisualEntityComponent() {Entity = Entity.Null});
-                }
+                ecb.SetComponentEnabled<NeedChangeVisualComponent>(entity, true);
                 break;
             }
 

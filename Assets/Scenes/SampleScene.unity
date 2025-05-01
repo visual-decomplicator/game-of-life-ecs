@@ -376,9 +376,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundsBufferSize: {x: 5, y: 5, z: 5}
-  cameraAdjustSpeed: 1
-  positionThreshold: 0.1
-  sizeThreshold: 0.1
+  fitAdjustSpeed: 1
+  fitPositionThreshold: 0.1
+  fitSizeThreshold: 0.1
+  moveSpeed: 1
+  moveStep: 10
 --- !u!224 &340573991 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}

@@ -7,7 +7,8 @@ namespace Systems {
     public partial class FitCameraSystem : SystemBase {
         protected override void OnUpdate() {
             Entity commonEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
-            if (!SystemAPI.IsComponentEnabled<NeedFitCameraComponent>(commonEntity)) {
+            if (!SystemAPI.IsComponentEnabled<NeedFitCameraComponent>(commonEntity) || 
+                SystemAPI.IsComponentEnabled<ManualCameraPositioningComponent>(commonEntity)) {
                 return;
             }
 
@@ -30,7 +31,7 @@ namespace Systems {
 
             if (!firstPoint) // Only if we found at least one cell
             {
-                CameraFitter.Instance.DoFitCamera(bounds);
+                CameraController.Instance.FitToBounds(bounds);
             }
         
             SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonEntity, false);

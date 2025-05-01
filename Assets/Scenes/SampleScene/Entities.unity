@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxGridSize:
-    x: 100
-    y: 100
-  EntitiesCount: 10000
+    x: 30
+    y: 30
+  EntitiesCount: 1000
   SpawnBatchSize: 100
 --- !u!4 &2023034107
 Transform:

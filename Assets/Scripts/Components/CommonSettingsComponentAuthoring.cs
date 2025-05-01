@@ -23,6 +23,8 @@ namespace Components {
                 });
                 
                 AddComponent<NeedFitCameraComponent>(entity);
+                AddComponent<ManualCameraPositioningComponent>(entity);
+                SetComponentEnabled<ManualCameraPositioningComponent>(entity, false);
             }
         }
     }
@@ -40,4 +42,5 @@ namespace Components {
     }
     
     public struct NeedFitCameraComponent : IComponentData, IEnableableComponent {}
+    public struct ManualCameraPositioningComponent : IComponentData, IEnableableComponent {}
 }

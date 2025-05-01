@@ -101,9 +101,45 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""PauseSteps"",
+                    ""type"": ""Button"",
+                    ""id"": ""6e32fc8f-d399-4555-9d3b-1b52a5582f85"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""AddCell"",
                     ""type"": ""Value"",
                     ""id"": ""f1c5cfe8-b79c-4d96-b072-f93eea3aa91b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraAutoFit"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c4d2086-02a1-4e51-9554-d9ac1489a291"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraManualMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""68438f16-d436-46f3-9b45-6ace25ffeb6a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraManualZoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""e72e4c3b-f229-455f-8f18-b7e9e657eee8"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -154,6 +190,138 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""AddCell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1b1aebe-80a5-4c5c-9fbc-03d054d87f02"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseSteps"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04b8b17b-d81a-4099-a5fd-c671e16d9e70"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraAutoFit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""0b9d8bb0-5cfa-45a3-bdca-be248d6dd262"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""321d1902-2560-476b-b1ed-387eb7ae829d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4e02d5d6-f5d1-4d8f-827b-4afe9d8fef8d"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8817712a-47a0-4377-a404-4d5fce7d1529"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""81e9a893-2c94-4e95-a6f0-1e1ffcda71ce"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""PlusMinus"",
+                    ""id"": ""89e4580b-fdd9-4b0c-8488-c8d363609540"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualZoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""2aa55443-a8b8-460b-ab04-158953fb243c"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4d3f9843-f168-4af8-b505-c5cbbf115c1b"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""6744412c-b60a-46d9-83c9-1a09afcb4d45"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5c8eb39c-1e0b-4290-9ee8-f7c890ccbb3c"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraManualZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -163,7 +331,11 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
         m_Game_NextStep = m_Game.FindAction("NextStep", throwIfNotFound: true);
+        m_Game_PauseSteps = m_Game.FindAction("PauseSteps", throwIfNotFound: true);
         m_Game_AddCell = m_Game.FindAction("AddCell", throwIfNotFound: true);
+        m_Game_CameraAutoFit = m_Game.FindAction("CameraAutoFit", throwIfNotFound: true);
+        m_Game_CameraManualMovement = m_Game.FindAction("CameraManualMovement", throwIfNotFound: true);
+        m_Game_CameraManualZoom = m_Game.FindAction("CameraManualZoom", throwIfNotFound: true);
     }
 
     ~@CustomInputAction()
@@ -245,7 +417,11 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Game;
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
     private readonly InputAction m_Game_NextStep;
+    private readonly InputAction m_Game_PauseSteps;
     private readonly InputAction m_Game_AddCell;
+    private readonly InputAction m_Game_CameraAutoFit;
+    private readonly InputAction m_Game_CameraManualMovement;
+    private readonly InputAction m_Game_CameraManualZoom;
     /// <summary>
     /// Provides access to input actions defined in input action map "Game".
     /// </summary>
@@ -262,9 +438,25 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @NextStep => m_Wrapper.m_Game_NextStep;
         /// <summary>
+        /// Provides access to the underlying input action "Game/PauseSteps".
+        /// </summary>
+        public InputAction @PauseSteps => m_Wrapper.m_Game_PauseSteps;
+        /// <summary>
         /// Provides access to the underlying input action "Game/AddCell".
         /// </summary>
         public InputAction @AddCell => m_Wrapper.m_Game_AddCell;
+        /// <summary>
+        /// Provides access to the underlying input action "Game/CameraAutoFit".
+        /// </summary>
+        public InputAction @CameraAutoFit => m_Wrapper.m_Game_CameraAutoFit;
+        /// <summary>
+        /// Provides access to the underlying input action "Game/CameraManualMovement".
+        /// </summary>
+        public InputAction @CameraManualMovement => m_Wrapper.m_Game_CameraManualMovement;
+        /// <summary>
+        /// Provides access to the underlying input action "Game/CameraManualZoom".
+        /// </summary>
+        public InputAction @CameraManualZoom => m_Wrapper.m_Game_CameraManualZoom;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -294,9 +486,21 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
             @NextStep.started += instance.OnNextStep;
             @NextStep.performed += instance.OnNextStep;
             @NextStep.canceled += instance.OnNextStep;
+            @PauseSteps.started += instance.OnPauseSteps;
+            @PauseSteps.performed += instance.OnPauseSteps;
+            @PauseSteps.canceled += instance.OnPauseSteps;
             @AddCell.started += instance.OnAddCell;
             @AddCell.performed += instance.OnAddCell;
             @AddCell.canceled += instance.OnAddCell;
+            @CameraAutoFit.started += instance.OnCameraAutoFit;
+            @CameraAutoFit.performed += instance.OnCameraAutoFit;
+            @CameraAutoFit.canceled += instance.OnCameraAutoFit;
+            @CameraManualMovement.started += instance.OnCameraManualMovement;
+            @CameraManualMovement.performed += instance.OnCameraManualMovement;
+            @CameraManualMovement.canceled += instance.OnCameraManualMovement;
+            @CameraManualZoom.started += instance.OnCameraManualZoom;
+            @CameraManualZoom.performed += instance.OnCameraManualZoom;
+            @CameraManualZoom.canceled += instance.OnCameraManualZoom;
         }
 
         /// <summary>
@@ -311,9 +515,21 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
             @NextStep.started -= instance.OnNextStep;
             @NextStep.performed -= instance.OnNextStep;
             @NextStep.canceled -= instance.OnNextStep;
+            @PauseSteps.started -= instance.OnPauseSteps;
+            @PauseSteps.performed -= instance.OnPauseSteps;
+            @PauseSteps.canceled -= instance.OnPauseSteps;
             @AddCell.started -= instance.OnAddCell;
             @AddCell.performed -= instance.OnAddCell;
             @AddCell.canceled -= instance.OnAddCell;
+            @CameraAutoFit.started -= instance.OnCameraAutoFit;
+            @CameraAutoFit.performed -= instance.OnCameraAutoFit;
+            @CameraAutoFit.canceled -= instance.OnCameraAutoFit;
+            @CameraManualMovement.started -= instance.OnCameraManualMovement;
+            @CameraManualMovement.performed -= instance.OnCameraManualMovement;
+            @CameraManualMovement.canceled -= instance.OnCameraManualMovement;
+            @CameraManualZoom.started -= instance.OnCameraManualZoom;
+            @CameraManualZoom.performed -= instance.OnCameraManualZoom;
+            @CameraManualZoom.canceled -= instance.OnCameraManualZoom;
         }
 
         /// <summary>
@@ -362,11 +578,39 @@ public partial class @CustomInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNextStep(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "PauseSteps" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPauseSteps(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "AddCell" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAddCell(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraAutoFit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraAutoFit(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraManualMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraManualMovement(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraManualZoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraManualZoom(InputAction.CallbackContext context);
     }
 }

@@ -38,6 +38,23 @@ namespace Systems {
         }
     }
     
+    public partial class PrepareCompleteSystem : SystemBase {
+        protected override void OnCreate() {
+            RequireForUpdate<GameStateComponent>();
+            
+        }
+        
+        protected override void OnUpdate() {
+            var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+            if (gameState.State != GameState.PreparationCompleted) {
+                return;
+            }
+            
+            LoaderUI.Instance.Hide();
+            SystemAPI.SetSingleton(new GameStateComponent(){ State = GameState.Play });
+        }
+    }
+    
     public partial struct InitialSpawnSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
@@ -64,7 +81,7 @@ namespace Systems {
                      ) {
                 if (initSpawner.ValueRO.EntitiesCount <= 0) {
                     ecb.RemoveComponent<InitialSpawnerComponent>(entity);
-                    SystemAPI.SetSingleton(new GameStateComponent(){State = GameState.Play});
+                    SystemAPI.SetSingleton(new GameStateComponent(){State = GameState.PreparationCompleted});
                     continue;
                 }
                 

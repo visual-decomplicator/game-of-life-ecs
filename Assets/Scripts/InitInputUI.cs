@@ -53,6 +53,7 @@ public class InitInputUI : MonoBehaviour
             PlayerPrefs.SetInt(EntitiesCountPref, entitiesCount);
             PlayerPrefs.SetFloat(StepDelayPref, stepDelay);
             
+            LoaderUI.Instance.Show();
             gameObject.SetActive(false);
         });
     }

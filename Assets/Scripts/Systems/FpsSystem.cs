@@ -1,12 +1,22 @@
+using Components;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 
 [BurstCompile]
 public partial struct FpsSystem : ISystem {
-    
+    [BurstCompile]
+    public void OnCreate(ref SystemState state) {
+        state.RequireForUpdate<GameStateComponent>();
+    }
+
     [BurstCompile]
     public void OnUpdate(ref SystemState state) {
+        var gameState = SystemAPI.GetSingleton<GameStateComponent>();
+        if (gameState.State != GameState.Play) {
+            return;
+        }
+        
         var fpsBufferLookup = SystemAPI.GetBufferLookup<Components.FPSCounterElement>(false);
         new FPSCalcJob() {
             Dt = SystemAPI.Time.DeltaTime,

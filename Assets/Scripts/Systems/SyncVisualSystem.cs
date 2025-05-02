@@ -42,29 +42,18 @@ namespace Systems {
                 SystemAPI.SetComponentEnabled<NeedChangeVisualComponent>(entity, false);
             }
             
-            foreach (var (visualEntity, gridPosition, entity) in SystemAPI
-                         .Query<VisualEntityComponent, GridPositionComponent>()
+            foreach (var (visualEntity, entity) in SystemAPI
+                         .Query<VisualEntityComponent>()
                          .WithAll<NeedChangeVisualComponent>()
                          .WithNone<IsAliveComponent>()
                          .WithEntityAccess()
                     ) {
                 if (visualEntity.Entity != Entity.Null) {
                     ecb.DestroyEntity(visualEntity.Entity);
+                    ecb.SetComponent(entity, new VisualEntityComponent() {
+                        Entity = Entity.Null
+                    });
                 }
-
-                Entity spawned = ecb.Instantiate(commonSettings.DeadVisualPrefab);
-                float3 cellPosition = new float3(
-                    gridPosition.Position.x + commonSettings.GridGap * gridPosition.Position.x, 0,
-                    gridPosition.Position.y + commonSettings.GridGap * gridPosition.Position.y
-                );
-                ecb.SetComponent(spawned, new LocalTransform() {
-                    Position = cellPosition,
-                    Rotation = commonSettings.VisualCellRotation,
-                    Scale = 1f
-                });
-                ecb.SetComponent(entity, new VisualEntityComponent() {
-                    Entity = spawned
-                });
                 SystemAPI.SetComponentEnabled<NeedChangeVisualComponent>(entity, false);
             }
         }

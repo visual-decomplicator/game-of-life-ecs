@@ -514,7 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -320
+      value: -456
       objectReference: {fileID: 0}
     - target: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -534,7 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7971168656522724462, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_text
-      value: Entities count
+      value: Spawn entities count
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1184,7 +1184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -304
+      value: -344
       objectReference: {fileID: 0}
     - target: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1204,7 +1204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7971168656522724462, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_text
-      value: Max grid size
+      value: Spawn grid size
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2515,7 +2515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -248
+      value: -234
       objectReference: {fileID: 0}
     - target: {fileID: 1535249633942232257, guid: 765d4d92b340d4974817783e2174b484, type: 3}
       propertyPath: m_AnchoredPosition.y

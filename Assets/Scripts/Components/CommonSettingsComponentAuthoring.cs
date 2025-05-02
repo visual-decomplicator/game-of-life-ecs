@@ -6,7 +6,6 @@ namespace Components {
     public class CommonSettingsComponentAuthoring : MonoBehaviour {
         public float GridGap;
         public GameObject CellPrefab;
-        public GameObject DeadVisualPrefab;
         public GameObject AliveVisualPrefab;
         public float3 VisualCellRotation;
         public float StepDelay;
@@ -18,7 +17,6 @@ namespace Components {
                 AddComponent(entity, new CommonSettingsComponent {
                     GridGap = authoring.GridGap,
                     CellPrefab = GetEntity(authoring.CellPrefab, TransformUsageFlags.None),
-                    DeadVisualPrefab = GetEntity(authoring.DeadVisualPrefab, TransformUsageFlags.Dynamic),
                     AliveVisualPrefab = GetEntity(authoring.AliveVisualPrefab, TransformUsageFlags.Dynamic),
                     VisualCellRotation = quaternion.EulerXYZ(authoring.VisualCellRotation),
                     MaxGridSize = authoring.MaxGridSize
@@ -37,7 +35,6 @@ namespace Components {
         public float GridGap;
         public int2 MaxGridSize;
         public Entity CellPrefab;
-        public Entity DeadVisualPrefab;
         public Entity AliveVisualPrefab;
         public quaternion VisualCellRotation;
     }

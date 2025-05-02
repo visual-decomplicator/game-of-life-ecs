@@ -1,10 +1,8 @@
 using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Components {
     public class InitialSpawnerComponentAuthoring : MonoBehaviour {
-        public int2 MaxGridSize;
         public int EntitiesCount;
         public int SpawnBatchSize;
 
@@ -12,7 +10,6 @@ namespace Components {
             public override void Bake(InitialSpawnerComponentAuthoring authoring) {
                 Entity entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new InitialSpawnerComponent {
-                    MaxGridSize = authoring.MaxGridSize,
                     EntitiesCount = authoring.EntitiesCount,
                     SpawnBatchSize = authoring.SpawnBatchSize
                 });
@@ -21,7 +18,6 @@ namespace Components {
     }
 
     public struct InitialSpawnerComponent : IComponentData {
-        public int2 MaxGridSize;
         public int EntitiesCount;
         public int SpawnBatchSize;
     }

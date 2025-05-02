@@ -10,6 +10,7 @@ namespace Components {
         public GameObject AliveVisualPrefab;
         public float3 VisualCellRotation;
         public float StepDelay;
+        public int2 MaxGridSize;
         
         private class CommonSettingsComponentBaker : Baker<CommonSettingsComponentAuthoring> {
             public override void Bake(CommonSettingsComponentAuthoring authoring) {
@@ -19,21 +20,22 @@ namespace Components {
                     CellPrefab = GetEntity(authoring.CellPrefab, TransformUsageFlags.None),
                     DeadVisualPrefab = GetEntity(authoring.DeadVisualPrefab, TransformUsageFlags.Dynamic),
                     AliveVisualPrefab = GetEntity(authoring.AliveVisualPrefab, TransformUsageFlags.Dynamic),
-                    VisualCellRotation = quaternion.EulerXYZ(authoring.VisualCellRotation)
+                    VisualCellRotation = quaternion.EulerXYZ(authoring.VisualCellRotation),
+                    MaxGridSize = authoring.MaxGridSize
                 });
                 AddComponent(entity, new CommonStepComponent {
                     StepDelay = authoring.StepDelay
                 });
                 
                 AddComponent<NeedFitCameraComponent>(entity);
-                AddComponent<ManualCameraPositioningComponent>(entity);
-                SetComponentEnabled<ManualCameraPositioningComponent>(entity, false);
+                SetComponentEnabled<NeedFitCameraComponent>(entity, false);
             }
         }
     }
     
     public struct CommonSettingsComponent : IComponentData {
         public float GridGap;
+        public int2 MaxGridSize;
         public Entity CellPrefab;
         public Entity DeadVisualPrefab;
         public Entity AliveVisualPrefab;
@@ -46,5 +48,4 @@ namespace Components {
     }
     
     public struct NeedFitCameraComponent : IComponentData, IEnableableComponent {}
-    public struct ManualCameraPositioningComponent : IComponentData, IEnableableComponent {}
 }

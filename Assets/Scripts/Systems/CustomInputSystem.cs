@@ -29,15 +29,11 @@ namespace Systems {
         }
 
         private void CameraManualMovementOnperformed(InputAction.CallbackContext obj) {
-            Entity commonEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
-            SystemAPI.SetComponentEnabled<ManualCameraPositioningComponent>(commonEntity, true);
             Vector2 movement = obj.ReadValue<Vector2>();
             CameraController.Instance.Move(movement);
         }
 
         private void CameraManualZoomOnperformed(InputAction.CallbackContext obj) {
-            Entity commonEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
-            SystemAPI.SetComponentEnabled<ManualCameraPositioningComponent>(commonEntity, true);
             Vector2 zoom = obj.ReadValue<Vector2>();
             if (zoom.y > 0) {
                 CameraController.Instance.ZoomIn();
@@ -48,7 +44,7 @@ namespace Systems {
 
         private void CameraAutoFitOnperformed(InputAction.CallbackContext obj) {
             Entity commonEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
-            SystemAPI.SetComponentEnabled<ManualCameraPositioningComponent>(commonEntity, false);
+            SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonEntity, true);
         }
 
         private void PauseStepsOnperformed(InputAction.CallbackContext obj) {

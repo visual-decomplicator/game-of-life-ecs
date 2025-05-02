@@ -57,8 +57,6 @@ namespace Systems {
             var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
             
-            SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonSettingsEntity, true);
-            
             foreach (var (counter, gridPosition, entity) in SystemAPI
                          .Query<CounterComponent, GridPositionComponent>()
                          .WithNone<IsAliveComponent>()

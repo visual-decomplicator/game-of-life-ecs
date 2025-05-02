@@ -7,33 +7,22 @@ namespace Systems {
     public partial class FitCameraSystem : SystemBase {
         protected override void OnUpdate() {
             Entity commonEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
-            if (!SystemAPI.IsComponentEnabled<NeedFitCameraComponent>(commonEntity) || 
-                SystemAPI.IsComponentEnabled<ManualCameraPositioningComponent>(commonEntity)) {
+            if (!SystemAPI.IsComponentEnabled<NeedFitCameraComponent>(commonEntity)) {
                 return;
             }
 
-            bool firstPoint = true;
-            Bounds bounds = default;
-        
+            var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
+            var bounds = new Bounds(Vector3.zero, new Vector3(
+                commonSettings.MaxGridSize.x * 2 + commonSettings.MaxGridSize.x * 2 * commonSettings.GridGap,
+                0,
+                commonSettings.MaxGridSize.y * 2 + + commonSettings.MaxGridSize.y * 2 * commonSettings.GridGap
+            ));
             foreach (var transform in SystemAPI.Query<LocalTransform>().WithAll<CellVisualComponent>()) 
             {
-                if (firstPoint)
-                {
-                    // Initialize bounds with first point
-                    bounds = new Bounds(transform.Position, Vector3.zero);
-                    firstPoint = false;
-                }
-                else
-                {
-                    bounds.Encapsulate(transform.Position);
-                }
+                bounds.Encapsulate(transform.Position);
             }
-
-            if (!firstPoint) // Only if we found at least one cell
-            {
-                CameraController.Instance.FitToBounds(bounds);
-            }
-        
+            
+            CameraController.Instance.FitToBounds(bounds);
             SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonEntity, false);
         }
     }

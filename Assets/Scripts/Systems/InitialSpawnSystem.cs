@@ -25,12 +25,16 @@ namespace Systems {
             
             var spawnSettings = SystemAPI.GetSingleton<InitialSpawnerComponent>();
             var stepSettings = SystemAPI.GetSingleton<CommonStepComponent>();
-            spawnSettings.MaxGridSize = e.GridSize;
+            var commonSettings = SystemAPI.GetSingleton<CommonSettingsComponent>();
+            Entity commonEntity = SystemAPI.GetSingletonEntity<CommonSettingsComponent>();
+            commonSettings.MaxGridSize = e.GridSize;
             spawnSettings.EntitiesCount = e.EntitiesCount;
             stepSettings.StepDelay = e.StepDelay;
             SystemAPI.SetSingleton(spawnSettings);
             SystemAPI.SetSingleton(new GameStateComponent(){ State = GameState.Prepare });
             SystemAPI.SetSingleton(stepSettings);
+            SystemAPI.SetSingleton(commonSettings);
+            SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonEntity, true);
         }
 
         protected override void OnUpdate() {
@@ -90,10 +94,10 @@ namespace Systems {
                 var cellCounterMap = new NativeHashMap<int2, int>(initSpawner.ValueRO.SpawnBatchSize, Allocator.Temp);
                 for (int i = 0; i < initSpawner.ValueRO.SpawnBatchSize; i++) {
                     int2 position = new int2(
-                        random.ValueRW.Value.NextInt(-initSpawner.ValueRO.MaxGridSize.x,
-                            initSpawner.ValueRO.MaxGridSize.x),
-                        random.ValueRW.Value.NextInt(-initSpawner.ValueRO.MaxGridSize.y,
-                            initSpawner.ValueRO.MaxGridSize.y)
+                        random.ValueRW.Value.NextInt(-commonSettings.MaxGridSize.x,
+                            commonSettings.MaxGridSize.x),
+                        random.ValueRW.Value.NextInt(-commonSettings.MaxGridSize.y,
+                            commonSettings.MaxGridSize.y)
                     );
                     cellPositionsToSpawn.Add(position);
                 }
@@ -149,7 +153,6 @@ namespace Systems {
                     ecb.AddComponent<NeedChangeVisualComponent>(spawned);
                 }
                 
-                SystemAPI.SetComponentEnabled<NeedFitCameraComponent>(commonSettingsEntity, true);
                 spawnedEntitiesMap.Dispose();
                 cellCounterMap.Dispose();
                 cellPositionsToSpawn.Dispose();

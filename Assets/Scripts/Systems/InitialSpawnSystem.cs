@@ -115,7 +115,7 @@ namespace Systems {
                     if (!cellPositionsToSpawn.Contains(gridPosition.Position)) {
                         continue;
                     }
-                    ecb.AddComponent<IsAliveComponent>(deadEntity);
+                    ecb.SetComponentEnabled<IsAliveComponent>(deadEntity, true);
                     ecb.SetComponentEnabled<NeedChangeVisualComponent>(deadEntity, true);
                     GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, gridPosition.Position, 1);
                     cellPositionsToSpawn.Remove(gridPosition.Position);
@@ -125,7 +125,7 @@ namespace Systems {
                     GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, position, 1);
                     Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
                     ecb.SetComponent(spawned, new GridPositionComponent { Position = position });
-                    ecb.AddComponent<IsAliveComponent>(spawned);
+                    ecb.SetComponentEnabled<IsAliveComponent>(spawned, true);
                     ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
                     ecb.AddComponent<NeedChangeVisualComponent>(spawned);
                     spawnedEntitiesMap.Add(position, spawned);

@@ -65,7 +65,7 @@ namespace Systems {
                 // New cell born when it have 3 neighbours.
                 if (counter.Value == 3) {
                     AddCountAroundCell(ref cellCounterMap, gridPosition.Position, 1);
-                    ecb.AddComponent<IsAliveComponent>(entity);
+                    ecb.SetComponentEnabled<IsAliveComponent>(entity, true);
                     ecb.SetComponentEnabled<NeedChangeVisualComponent>(entity, true);
                     continue;
                 }
@@ -87,7 +87,7 @@ namespace Systems {
                 }
                 
                 // The rest of entities will be destroyed because of solitude or overpopulation.
-                ecb.RemoveComponent<IsAliveComponent>(entity);
+                ecb.SetComponentEnabled<IsAliveComponent>(entity, false);
                 AddCountAroundCell(ref cellCounterMap, gridPosition.Position, -1);
                 ecb.SetComponentEnabled<NeedChangeVisualComponent>(entity, true);
             }

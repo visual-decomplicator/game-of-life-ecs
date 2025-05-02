@@ -24,10 +24,13 @@ namespace Systems {
             }
             
             var spawnSettings = SystemAPI.GetSingleton<InitialSpawnerComponent>();
+            var stepSettings = SystemAPI.GetSingleton<CommonStepComponent>();
             spawnSettings.MaxGridSize = e.GridSize;
             spawnSettings.EntitiesCount = e.EntitiesCount;
+            stepSettings.StepDelay = e.StepDelay;
             SystemAPI.SetSingleton(spawnSettings);
             SystemAPI.SetSingleton(new GameStateComponent(){ State = GameState.Prepare });
+            SystemAPI.SetSingleton(stepSettings);
         }
 
         protected override void OnUpdate() {

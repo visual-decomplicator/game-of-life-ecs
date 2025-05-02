@@ -33,7 +33,7 @@ namespace Systems {
                 );
                 ecb.SetComponent(spawned, new LocalTransform() {
                     Position = cellPosition,
-                    Rotation = quaternion.identity,
+                    Rotation = commonSettings.VisualCellRotation,
                     Scale = 1f
                 });
                 ecb.SetComponent(entity, new VisualEntityComponent() {
@@ -59,7 +59,7 @@ namespace Systems {
                 );
                 ecb.SetComponent(spawned, new LocalTransform() {
                     Position = cellPosition,
-                    Rotation = quaternion.identity,
+                    Rotation = commonSettings.VisualCellRotation,
                     Scale = 1f
                 });
                 ecb.SetComponent(entity, new VisualEntityComponent() {

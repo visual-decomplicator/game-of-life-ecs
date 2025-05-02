@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Components {
@@ -7,6 +8,7 @@ namespace Components {
         public GameObject CellPrefab;
         public GameObject DeadVisualPrefab;
         public GameObject AliveVisualPrefab;
+        public float3 VisualCellRotation;
         public float StepDelay;
         
         private class CommonSettingsComponentBaker : Baker<CommonSettingsComponentAuthoring> {
@@ -16,7 +18,8 @@ namespace Components {
                     GridGap = authoring.GridGap,
                     CellPrefab = GetEntity(authoring.CellPrefab, TransformUsageFlags.None),
                     DeadVisualPrefab = GetEntity(authoring.DeadVisualPrefab, TransformUsageFlags.Dynamic),
-                    AliveVisualPrefab = GetEntity(authoring.AliveVisualPrefab, TransformUsageFlags.Dynamic)
+                    AliveVisualPrefab = GetEntity(authoring.AliveVisualPrefab, TransformUsageFlags.Dynamic),
+                    VisualCellRotation = quaternion.EulerXYZ(authoring.VisualCellRotation)
                 });
                 AddComponent(entity, new CommonStepComponent {
                     StepDelay = authoring.StepDelay
@@ -34,6 +37,7 @@ namespace Components {
         public Entity CellPrefab;
         public Entity DeadVisualPrefab;
         public Entity AliveVisualPrefab;
+        public quaternion VisualCellRotation;
     }
     
     public struct CommonStepComponent : IComponentData {

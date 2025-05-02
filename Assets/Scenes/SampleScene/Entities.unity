@@ -215,8 +215,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridGap: 0.1
   CellPrefab: {fileID: 2915970538606652106, guid: 7aeb13a8c24034243b90b9c204952dd9, type: 3}
-  DeadVisualPrefab: {fileID: 2769806759687684446, guid: 08d8e6126f81745fda76c39754e727c7, type: 3}
-  AliveVisualPrefab: {fileID: 1741351237326107626, guid: 15887911a380a4e81848abb14905e3e5, type: 3}
+  DeadVisualPrefab: {fileID: 3079564194031266963, guid: 89f5074cf2e5b4ce39949e068dbe9711, type: 3}
+  AliveVisualPrefab: {fileID: 5729682748147778627, guid: 18497687c05484b8998f46a5d98a32a7, type: 3}
+  VisualCellRotation:
+    x: 90
+    y: 0
+    z: 0
   StepDelay: 0.2
 --- !u!4 &2038956714
 Transform:

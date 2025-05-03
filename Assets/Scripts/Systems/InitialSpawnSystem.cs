@@ -60,12 +60,21 @@ namespace Systems {
     }
     
     public partial struct InitialSpawnSystem : ISystem {
-        [BurstCompile]
+        private EntityArchetype _cellEntityArchetype;
+        
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<CommonSettingsComponent>();
             state.RequireForUpdate<InitialSpawnerComponent>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<GameStateComponent>();
+            
+            _cellEntityArchetype = state.EntityManager.CreateArchetype(
+                typeof(GridPositionComponent),
+                typeof(CounterComponent),
+                typeof(VisualEntityComponent),
+                typeof(IsAliveComponent),
+                typeof(NeedChangeVisualComponent)
+            );
         }
 
         [BurstCompile]
@@ -123,11 +132,9 @@ namespace Systems {
 
                 foreach (var position in cellPositionsToSpawn) {
                     GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, position, 1);
-                    Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+                    Entity spawned = ecb.CreateEntity(_cellEntityArchetype);
                     ecb.SetComponent(spawned, new GridPositionComponent { Position = position });
-                    ecb.SetComponentEnabled<IsAliveComponent>(spawned, true);
-                    ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
-                    ecb.AddComponent<NeedChangeVisualComponent>(spawned);
+                    ecb.SetComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
                     spawnedEntitiesMap.Add(position, spawned);
                 }
                 
@@ -145,12 +152,13 @@ namespace Systems {
                         ecb.SetComponent(item, new CounterComponent() { Value = counterDeltaMap.Value });
                         continue;
                     }
-                    
-                    Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+
+                    Entity spawned = ecb.CreateEntity(_cellEntityArchetype);
                     ecb.SetComponent(spawned, new GridPositionComponent { Position = counterDeltaMap.Key });
                     ecb.SetComponent(spawned, new CounterComponent() { Value = counterDeltaMap.Value });
-                    ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
-                    ecb.AddComponent<NeedChangeVisualComponent>(spawned);
+                    ecb.SetComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                    ecb.SetComponentEnabled<IsAliveComponent>(spawned, false);
+                    ecb.SetComponentEnabled<NeedChangeVisualComponent>(spawned, false);
                 }
                 
                 spawnedEntitiesMap.Dispose();

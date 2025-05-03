@@ -8,11 +8,19 @@ namespace Systems {
     public partial struct GameOfLifeSystem : ISystem {
         
         private const int CellCounterMapInitCapacity = 1000;
-        [BurstCompile]
+        private EntityArchetype _cellEntityArchetype;
+        
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<CommonSettingsComponent>();
             state.RequireForUpdate<CommonStepComponent>();
             state.RequireForUpdate<GameStateComponent>();
+            _cellEntityArchetype = state.EntityManager.CreateArchetype(
+                typeof(GridPositionComponent),
+                typeof(CounterComponent),
+                typeof(VisualEntityComponent),
+                typeof(IsAliveComponent),
+                typeof(NeedChangeVisualComponent)
+                );
         }
 
         private static void AddCountAtPosition(ref NativeHashMap<int2, int> cellCounterMap, int2 position, int count) {
@@ -107,11 +115,12 @@ namespace Systems {
 
             // Instantiate missing cells and apply counters to them.
             foreach (var kvPair in cellCounterMap) {
-                Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+                Entity spawned = ecb.CreateEntity(_cellEntityArchetype);
                 ecb.SetComponent(spawned, new GridPositionComponent { Position = kvPair.Key });
                 ecb.SetComponent(spawned, new CounterComponent { Value = kvPair.Value });
-                ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
-                ecb.AddComponent<NeedChangeVisualComponent>(spawned);
+                ecb.SetComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                ecb.SetComponentEnabled<NeedChangeVisualComponent>(spawned, false);
+                ecb.SetComponentEnabled<IsAliveComponent>(spawned, false);
             }
             
             foreach (var (gridPosition, entity) in SystemAPI

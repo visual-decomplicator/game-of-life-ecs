@@ -5,9 +5,19 @@ using Unity.Mathematics;
 
 namespace Systems {
     public partial class InputSpawnSystem : SystemBase {
+        private EntityArchetype _cellEntityArchetype;
+        
         protected override void OnCreate() {
             this.World.GetExistingSystemManaged<CustomInputSystem>().OnClick += OnClick;
             this.RequireForUpdate<CommonSettingsComponent>();
+            
+            _cellEntityArchetype = EntityManager.CreateArchetype(
+                typeof(GridPositionComponent),
+                typeof(CounterComponent),
+                typeof(VisualEntityComponent),
+                typeof(IsAliveComponent),
+                typeof(NeedChangeVisualComponent)
+            );
         }
 
         private void OnClick(object sender, CustomInputSystem.ClickData e) {
@@ -56,11 +66,9 @@ namespace Systems {
 
             if (!entityFound) {
                 GameOfLifeSystem.AddCountAroundCell(ref cellCounterMap, cellCoordinates, 1);
-                Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+                Entity spawned = ecb.CreateEntity(_cellEntityArchetype);
                 ecb.SetComponent(spawned, new GridPositionComponent { Position = cellCoordinates });
-                ecb.SetComponentEnabled<IsAliveComponent>(spawned, true);
-                ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
-                ecb.AddComponent<NeedChangeVisualComponent>(spawned);
+                ecb.SetComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
             }
             
             foreach (var (counter, gridPosition) in SystemAPI
@@ -73,11 +81,12 @@ namespace Systems {
             }
 
             foreach (var counterDeltaMap in cellCounterMap) {
-                Entity spawned = ecb.Instantiate(commonSettings.CellPrefab);
+                Entity spawned = ecb.CreateEntity(_cellEntityArchetype);
                 ecb.SetComponent(spawned, new GridPositionComponent { Position = counterDeltaMap.Key });
                 ecb.SetComponent(spawned, new CounterComponent() { Value = counterDeltaMap.Value });
-                ecb.AddComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
-                ecb.AddComponent<NeedChangeVisualComponent>(spawned);
+                ecb.SetComponent(spawned, new VisualEntityComponent(){Entity = Entity.Null});
+                ecb.SetComponentEnabled<IsAliveComponent>(spawned, false);
+                ecb.SetComponentEnabled<NeedChangeVisualComponent>(spawned, false);
             }
         }
 
